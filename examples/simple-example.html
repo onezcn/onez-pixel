@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OnezGame 简单示例</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      overflow: hidden;
+    }
+    
+    #game-container {
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <!-- 游戏容器 -->
+  <div id="game-container"></div>
+
+  <!-- 加载 OnezGame CDN 文件 -->
+  <script src="../dist/cdn/onezgame.min.js"></script>
+  
+  <script>
+    // 方式 1: 使用便捷函数
+    window.onezgame({
+      container: 'game-container',
+      assetsBaseUrl: '/assets',
+      showUI: true,
+      title: 'AI Town - Static',
+      hint: '使用 WASD 或方向键移动角色',
+      backgroundColor: 0x7ab5ff
+    });
+    
+    // 方式 2: 使用类
+    // const game = new window.OnezGame({
+    //   container: 'game-container',
+    //   assetsBaseUrl: '/assets',
+    //   showUI: true,
+    //   title: 'AI Town - Static',
+    //   hint: '使用 WASD 或方向键移动角色',
+    //   backgroundColor: 0x7ab5ff
+    // });
+    // game.init();
+    
+    // 方式 3: 使用 body 作为容器（默认）
+    // window.onezgame({
+    //   assetsBaseUrl: '/assets'
+    // });
+  </script>
+</body>
+</html>
+

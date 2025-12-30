@@ -1,26 +1,27 @@
 import { PixiComponent, applyDefaultProps } from '@pixi/react';
 import * as PIXI from 'pixi.js';
-import { AnimatedSprite, WorldMap } from '../../convex/aiTown/worldMap';
+import { AnimatedSprite, WorldMap } from '../engine/worldMap';
 import * as campfire from '../../data/animations/campfire.json';
 import * as gentlesparkle from '../../data/animations/gentlesparkle.json';
 import * as gentlewaterfall from '../../data/animations/gentlewaterfall.json';
 import * as gentlesplash from '../../data/animations/gentlesplash.json';
 import * as windmill from '../../data/animations/windmill.json';
+import { getAssetPath } from '../utils/assets.ts';
 
-const animations = {
-  'campfire.json': { spritesheet: campfire, url: '/ai-town/assets/spritesheets/campfire.png' },
+const getAnimations = () => ({
+  'campfire.json': { spritesheet: campfire, url: getAssetPath('/spritesheets/campfire.png') },
   'gentlesparkle.json': {
     spritesheet: gentlesparkle,
-    url: '/ai-town/assets/spritesheets/gentlesparkle32.png',
+    url: getAssetPath('/spritesheets/gentlesparkle32.png'),
   },
   'gentlewaterfall.json': {
     spritesheet: gentlewaterfall,
-    url: '/ai-town/assets/spritesheets/gentlewaterfall32.png',
+    url: getAssetPath('/spritesheets/gentlewaterfall32.png'),
   },
-  'windmill.json': { spritesheet: windmill, url: '/ai-town/assets/spritesheets/windmill.png' },
+  'windmill.json': { spritesheet: windmill, url: getAssetPath('/spritesheets/windmill.png') },
   'gentlesplash.json': { spritesheet: gentlesplash,
-    url: '/ai-town/assets/spritesheets/gentlewaterfall32.png',},
-};
+    url: getAssetPath('/spritesheets/gentlewaterfall32.png'),},
+});
 
 export const PixiStaticMap = PixiComponent('StaticMap', {
   create: (props: { map: WorldMap; [k: string]: any }) => {
@@ -74,6 +75,7 @@ export const PixiStaticMap = PixiComponent('StaticMap', {
       }
       spritesBySheet.get(sheet)!.push(sprite);
     }
+    const animations = getAnimations();
     for (const [sheet, sprites] of spritesBySheet.entries()) {
       const animation = (animations as any)[sheet];
       if (!animation) {

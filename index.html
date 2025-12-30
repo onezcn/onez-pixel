@@ -1,18 +1,248 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" sizes="any" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Town</title>
-    <meta
-      name="description"
-      content="A virtual town where AI characters live, chat and socialize"
-    />
-    <script defer data-domain="convex.dev" src="https://plausible.io/js/script.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OnezGame 人物控制示例</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      overflow: hidden;
+    }
+    
+    #game-container {
+      width: 100vw;
+      height: 100vh;
+    }
+    
+    .control-panel {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      z-index: 1000;
+      max-width: 400px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    
+    .control-panel h2 {
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+    
+    .control-panel button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    .control-panel button:hover {
+      background: #45a049;
+    }
+    
+    .control-panel button.danger {
+      background: #f44336;
+    }
+    
+    .control-panel button.danger:hover {
+      background: #da190b;
+    }
+    
+    .control-panel .section {
+      margin: 15px 0;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .control-panel .section-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #4CAF50;
+    }
+    
+    .status {
+      margin-top: 15px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 游戏容器 -->
+  <div id="game-container"></div>
+  
+  <!-- 控制面板 -->
+  <div class="control-panel">
+    <h2>OnezGame 人物控制示例</h2>
+    
+    <div class="section">
+      <div class="section-title">基础操作</div>
+      <button onclick="runExample('example1')">1. 添加 NPC</button>
+      <button onclick="runExample('example2')">2. 移动 NPC</button>
+      <button onclick="runExample('example3')">3. 设置方向</button>
+      <button onclick="runExample('example4')">4. 设置行为</button>
+      <button onclick="runExample('example5')" class="danger">5. 移除 NPC</button>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">AI 行为</div>
+      <button onclick="runExample('example6')">6. 随机游走</button>
+      <button onclick="runExample('example7')">7. 跟随玩家</button>
+      <button onclick="runExample('example8')">8. 巡逻</button>
+      <button onclick="runExample('example9')">9. 多个 NPC</button>
+      <button onclick="runExample('example10')">10. 响应式 NPC</button>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">高级功能</div>
+      <button onclick="runExample('example11')">11. NPC 队列</button>
+      <button onclick="runExample('example12')">12. 定时任务</button>
+      <button onclick="runExample('example13')">13. 键盘控制</button>
+      <button onclick="runExample('example15')">15. 状态监控</button>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">讲话气泡和名称</div>
+      <button onclick="runExample('example16')">16. 添加带名称 NPC（上）</button>
+      <button onclick="runExample('example17')">17. 添加带名称 NPC（下）</button>
+      <button onclick="runExample('example18')">18. 显示讲话气泡</button>
+      <button onclick="runExample('example19')">19. 永久讲话气泡</button>
+      <button onclick="runExample('example20')">20. 隐藏讲话气泡</button>
+      <button onclick="runExample('example21')">21. 设置名称</button>
+      <button onclick="runExample('example22')">22. 更改名称位置</button>
+      <button onclick="runExample('example23')">23. 隐藏名称</button>
+      <button onclick="runExample('example24')">24. 对话序列</button>
+      <button onclick="runExample('example25')">25. 多个 NPC 讲话</button>
+    </div>
+
+    <div class="section">
+      <div class="section-title">思考状态（💭）</div>
+      <button onclick="runExample('example26')">26. 显示思考状态</button>
+      <button onclick="runExample('example27')">27. 永久思考状态</button>
+      <button onclick="runExample('example28')">28. 隐藏思考状态</button>
+      <button onclick="runExample('example29')">29. 思考后讲话</button>
+      <button onclick="runExample('example30')">30. 多个 NPC 思考</button>
+    </div>
+
+    <div class="section">
+      <div class="section-title">寻路功能</div>
+      <button onclick="runExample('example31')">31. 基本寻路</button>
+      <button onclick="runExample('example32')">32. 寻路到玩家</button>
+      <button onclick="runExample('example33')">33. 多个 NPC 寻路</button>
+      <button onclick="runExample('example34')">34. 寻路后动作</button>
+      <button onclick="runExample('example35')">35. 绕过障碍物</button>
+    </div>
+    
+    <div class="status" id="status">
+      等待游戏初始化...
+    </div>
+  </div>
+
+  <!-- 加载 OnezGame CDN 文件 -->
+  <script src="./dist/cdn/onezgame.min.js"></script>
+  
+  <!-- 加载控制示例（包含讲话气泡功能） -->
+  <script src="./examples/character-control-examples.js"></script>
+  
+  <script>
+    let gameInstance = null;
+    
+    // 初始化游戏
+    function initGame() {
+      if (gameInstance) {
+        gameInstance.destroy();
+      }
+      
+      gameInstance = window.onezgame({
+        container: 'game-container',
+        assetsBaseUrl: '/assets',
+        showUI: true,
+        title: '人物控制示例',
+        hint: '使用控制面板测试各种 NPC 行为',
+        backgroundColor: 0x7ab5ff,
+      });
+      
+      updateStatus('游戏已初始化，可以使用控制面板');
+      
+      // 等待控制器就绪（多次检查，因为模块加载可能需要时间）
+      let checkCount = 0;
+      const maxChecks = 10;
+      const checkController = () => {
+        checkCount++;
+        if (window.onezGameController) {
+          updateStatus('控制器已就绪，可以开始测试');
+          console.log('控制器可用:', window.onezGameController);
+        } else if (checkCount < maxChecks) {
+          setTimeout(checkController, 200);
+        } else {
+          updateStatus('警告：控制器未找到。请检查控制台是否有错误信息。');
+          console.error('OnezGameController 未找到。可用的全局对象:', Object.keys(window).filter(k => k.includes('onez') || k.includes('Onez')));
+        }
+      };
+      checkController();
+    }
+    
+    // 运行示例
+    function runExample(exampleName) {
+      if (!window.OnezGameExamples) {
+        updateStatus('错误：示例代码未加载');
+        return;
+      }
+      
+      const example = window.OnezGameExamples[exampleName];
+      if (!example) {
+        updateStatus(`错误：示例 ${exampleName} 不存在`);
+        return;
+      }
+      
+      try {
+        example();
+        updateStatus(`已执行: ${exampleName}`);
+      } catch (error) {
+        updateStatus(`错误: ${error.message}`);
+        console.error(error);
+      }
+    }
+    
+    // 更新状态
+    function updateStatus(message) {
+      const statusEl = document.getElementById('status');
+      if (statusEl) {
+        statusEl.textContent = message;
+      }
+      console.log(message);
+    }
+    
+    // 页面加载完成后初始化
+    window.addEventListener('DOMContentLoaded', () => {
+      initGame();
+    });
+    
+    // 监听 NPC 更新（用于状态显示）
+    if (window.onezGameController) {
+      window.onezGameController.onNPCUpdate((npcs) => {
+        updateStatus(`当前有 ${npcs.length} 个 NPC`);
+      });
+    }
+  </script>
+</body>
 </html>
+

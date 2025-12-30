@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OnezGame CDN 示例</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      overflow: hidden;
+    }
+    
+    #onezgame-container {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+    
+    .controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      z-index: 1000;
+      font-size: 14px;
+    }
+    
+    .controls h3 {
+      margin-bottom: 10px;
+    }
+    
+    .controls input {
+      width: 100%;
+      padding: 5px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    
+    .controls button {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .controls button:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <!-- 游戏容器 -->
+  <div id="onezgame-container"></div>
+  
+  <!-- 控制面板 -->
+  <div class="controls">
+    <h3>OnezGame 配置</h3>
+    <label>
+      素材基础路径:
+      <input type="text" id="assetsBaseUrl" value="/assets" placeholder="/assets">
+    </label>
+    <label>
+      显示 UI:
+      <input type="checkbox" id="showUI" checked>
+    </label>
+    <label>
+      标题:
+      <input type="text" id="title" value="AI Town - Static" placeholder="游戏标题">
+    </label>
+    <label>
+      提示文字:
+      <input type="text" id="hint" value="使用 WASD 或方向键移动角色" placeholder="提示文字">
+    </label>
+    <button onclick="initGame()">初始化游戏</button>
+    <button onclick="destroyGame()">销毁游戏</button>
+  </div>
+
+  <!-- 加载 OnezGame -->
+  <script src="../dist/cdn/onezgame.min.js"></script>
+  
+  <script>
+    let gameInstance = null;
+    
+    function initGame() {
+      // 如果已有实例，先销毁
+      if (gameInstance) {
+        gameInstance.destroy();
+      }
+      
+      // 获取配置
+      const config = {
+        container: 'onezgame-container',
+        assetsBaseUrl: document.getElementById('assetsBaseUrl').value || '/assets',
+        showUI: document.getElementById('showUI').checked,
+        title: document.getElementById('title').value || 'AI Town - Static',
+        hint: document.getElementById('hint').value || '使用 WASD 或方向键移动角色',
+        backgroundColor: 0x7ab5ff,
+      };
+      
+      // 初始化游戏
+      if (typeof window.OnezGame !== 'undefined') {
+        gameInstance = new window.OnezGame(config);
+        gameInstance.init();
+        console.log('游戏已初始化', config);
+      } else {
+        console.error('OnezGame 未加载');
+      }
+    }
+    
+    function destroyGame() {
+      if (gameInstance) {
+        gameInstance.destroy();
+        gameInstance = null;
+        console.log('游戏已销毁');
+      }
+    }
+    
+    // 页面加载完成后自动初始化
+    window.addEventListener('DOMContentLoaded', () => {
+      initGame();
+    });
+  </script>
+</body>
+</html>
+

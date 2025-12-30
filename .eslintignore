@@ -1,7 +1,17 @@
-webpack*
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Dependencies
+node_modules/
+
+# Config files (already linted separately)
 .eslintrc.js
-next.config.js
 tailwind.config.js
 postcss.config.js
-convex/_generated/*
-dist/*
+vite.config.*.ts
+
+# Generated files
+*.min.js
+*.min.css

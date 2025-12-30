@@ -1,6 +1,19 @@
-MIT License
+ONEZ PIXEL PROJECT LICENSE
+================================================================================
 
-Copyright (c) 2023 a16z-infra
+This project is distributed under a dual-license strategy:
+1. SOURCE CODE is licensed under the MIT License.
+2. ART ASSETS are licensed under Creative Commons (various versions).
+
+See specific terms below.
+
+================================================================================
+PART 1: SOURCE CODE LICENSE (MIT)
+================================================================================
+
+Applies to all files in 'src/', 'engine/', and other script files, excluding assets.
+
+Copyright (c) 2024 OnezGame Team
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +32,56 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+--------------------------------------------------------------------------------
+THIRD PARTY NOTICES (SOURCE CODE)
+--------------------------------------------------------------------------------
+This project is derived from and contains code from "AI Town":
+
+AI Town
+Copyright (c) 2023 a16z-infra
+Licensed under the MIT License.
+https://github.com/a16z-infra/ai-town
+
+================================================================================
+PART 2: ASSETS LICENSE (CREATIVE COMMONS)
+================================================================================
+
+Applies to image files, audio files, and map data located in 'public/assets/' 
+or 'data/'.
+
+The default assets included in this repository are NOT covered by the MIT License.
+They are provided for demonstration purposes and are governed by their original 
+licenses (Creative Commons Attribution/ShareAlike).
+
+If you use these assets in your project, you must adhere to the following attribution 
+requirements:
+
+1. Tilesheet (16x16 Game Assets)
+   - Author: George Bailey
+   - Source: https://opengameart.org/content/16x16-game-assets
+   - License: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
+
+2. Tilesheet (16x16 RPG Tileset)
+   - Author: hilau
+   - Source: https://opengameart.org/content/16x16-rpg-tileset
+   - License: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
+
+3. Character Sprites (Tiny RPG Forest)
+   - Author: ansimuz
+   - Source: https://opengameart.org/content/tiny-rpg-forest
+   - License: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
+
+4. UI Elements (Pixel Art GUI)
+   - Author: Mounir Tohami
+   - Source: https://mounirtohami.itch.io/pixel-art-gui-elements
+   - License: CC-BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/)
+
+--------------------------------------------------------------------------------
+USAGE GUIDE FOR DEVELOPERS
+--------------------------------------------------------------------------------
+- If you use the Onez Pixel ENGINE (Code) with your OWN assets:
+  -> You are bound only by the MIT License (Part 1). You do not need to open source your game.
+
+- If you use the provided DEMO ASSETS in your game:
+  -> You must comply with the CC-BY/CC-BY-SA licenses listed in Part 2.
